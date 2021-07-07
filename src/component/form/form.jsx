@@ -188,6 +188,7 @@ class Form extends React.Component {
         event.preventDefault();
         event.stopPropagation();
         let contactObject = {
+            id:this.state.id,
             name: this.state.name,
             address: this.state.address,
             city: this.state.city,
@@ -198,6 +199,7 @@ class Form extends React.Component {
         if (this.state.isUpdate) {
             new AddressBookService().updateAddressBook(contactObject)
                 .then(responseText => {
+                    this.reset();
                     this.props.history.push("/home");
                 }).catch(error => {
                     console.log(error);
@@ -205,13 +207,12 @@ class Form extends React.Component {
         } else {
             new AddressBookService().addAddressBook(contactObject)
                 .then(responseDTO => {
-                    console.log(responseDTO);
-
+                    this.reset();
+                    this.props.history.push("/home");
                 }).catch(error => {
                     console.log(error);
                 });
-            this.reset();
-            this.props.history.push("/home");
+           
         }
 
     }
@@ -309,9 +310,8 @@ class Form extends React.Component {
                         </div>
 
                         <div className="buttonParent">
-                            {/* <a href="../pages/homepage.html" class="resetButton button cancelButton">Cancel</a> */}
                             <div className="submit-reset">
-                                <button className="submitButton button" id="submit">Submit</button>
+                                <button className="submitButton button" id="submit">{this.state.isUpdate ? 'Update' : 'Submit'}</button>
                                 <button className="resetButton button" type="reset" id="reset">Reset</button>
                             </div>
                         </div>

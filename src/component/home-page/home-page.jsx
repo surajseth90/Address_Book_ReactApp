@@ -26,6 +26,7 @@ class HomePage extends React.Component {
                 let responseData = ResponseDTO.data;
                 this.setState({ allAddressBookArray: responseData.data })
                 this.setState({ addressBookArray: responseData.data })
+                console.log(this.state.addressBookArray);
             }).catch(error => {
                 console.log(error);
             })
