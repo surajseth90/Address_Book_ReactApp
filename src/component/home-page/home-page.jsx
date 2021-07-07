@@ -52,8 +52,7 @@ class HomePage extends React.Component {
                             </div>
                         </div>
                         <div className="search-box" onClick={this.openSearch}>
-                            <input className={"search-input " + (this.state.searchExpand && "input-expand")}
-                                onChange={this.search} type="text" />
+                            <input className="search-input" onChange={this.search} type="text" />
                             <img className="search-icon" src={searchIcon} alt="Search Icon" />
                         </div>
                         <Link to="form" className="add-button">
