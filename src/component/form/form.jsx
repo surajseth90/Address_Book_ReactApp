@@ -1,7 +1,7 @@
 import React from 'react'
 import './form.css'
 import cancelButton from '../../assets/images/cross.png'
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import AddressBookService from '../../services/address-book-service';
 
 const initalValue = {
@@ -65,26 +65,19 @@ class Form extends React.Component {
 
 
     componentDidMount = () => {
-        
-        if (this.props.match && this.props.match.params.id) {
-            console.log(this.props.match.params);
-            let id = this.props.match.params.id;
-            console.log(id);
-            if (id !== undefined && id !== '') {
-                this.getBookById(id);
-            }
+        let id = this.props.match.params.id;
+        if (id !== undefined && id !== '') {
+            this.getBookById(id);
         }
     }
 
     getBookById = (id) => {
-        console.log("in methid "+id);
         new AddressBookService().getAddressBookId(id)
             .then(ResponseDTO => {
                 let responseData = ResponseDTO.data;
                 this.setContactData(responseData.data);
-                console.log(responseData.data);
             }).catch(error => {
-                console.log("Error while fetching contact data by ID :\n" + JSON.stringify(error));
+                console.log(error);
             })
     }
     setContactData = (contact) => {
@@ -202,7 +195,6 @@ class Form extends React.Component {
             zip: this.state.zip,
             phoneNumber: this.state.phoneNumber
         }
-        console.log(contactObject);
         if (this.state.isUpdate) {
             new AddressBookService().updateAddressBook(contactObject)
                 .then(responseText => {
@@ -214,7 +206,7 @@ class Form extends React.Component {
             new AddressBookService().addAddressBook(contactObject)
                 .then(responseDTO => {
                     console.log(responseDTO);
-                   
+
                 }).catch(error => {
                     console.log(error);
                 });
@@ -250,7 +242,7 @@ class Form extends React.Component {
 
                         <div className="row-content">
                             <label for="address">Address</label>
-                            <input className="text-field" type="text" value={this.state.address} placeholder="Address" name="address" id="address" onChange={this.onChangeHandler}/>
+                            <input className="text-field" type="text" value={this.state.address} placeholder="Address" name="address" id="address" onChange={this.onChangeHandler} />
                             <valid-message className="valid-name" htmlFor="address">{this.state.valid.address}</valid-message>
                             <error-output className="name-error" htmlFor="address">{this.state.error.address}</error-output>
 
@@ -331,4 +323,4 @@ class Form extends React.Component {
 
 }
 
-export default Form;
+export default withRouter(Form);

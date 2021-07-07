@@ -6,40 +6,40 @@ import { Link } from 'react-router-dom';
 import AddressBookService from '../../services/address-book-service';
 import AddressBookList from '../address-book-list/address-book-list';
 
-class HomePage extends React.Component{
-    constructor(props){
+class HomePage extends React.Component {
+    constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             allAddressBookArray: [],
-            addressBookArray : []
+            addressBookArray: []
         }
         this.addressBookService = new AddressBookService();
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getAddressBook();
     }
 
-    getAddressBook =()=>{
+    getAddressBook = () => {
         this.addressBookService.getAddressBook()
-        .then(ResponseDTO => {
-            let responseData = ResponseDTO.data;
-            this.setState({allAddressBookArray:responseData.data})
-            this.setState({addressBookArray:responseData.data})
-        }).catch(error=>{
-            console.log(error);
-        })
+            .then(ResponseDTO => {
+                let responseData = ResponseDTO.data;
+                this.setState({ allAddressBookArray: responseData.data })
+                this.setState({ addressBookArray: responseData.data })
+            }).catch(error => {
+                console.log(error);
+            })
     }
 
-    search = async(event)=>{
+    search = async (event) => {
         let searchName = event.target.value;
-        await this.setState({addressBookArray:this.state.allAddressBookArray})
+        await this.setState({ addressBookArray: this.state.allAddressBookArray })
         let addressBook = this.state.addressBookArray;
-        if(searchName.trim().length > 0)
-            addressBook = addressBook.filter((book)=>book.name.toLowerCase().indexOf(searchName.toLowerCase())>-1);
-            this.setState({addressBookArray : addressBook})
+        if (searchName.trim().length > 0)
+            addressBook = addressBook.filter((book) => book.name.toLowerCase().indexOf(searchName.toLowerCase()) > -1);
+        this.setState({ addressBookArray: addressBook })
     }
-    
+
     render() {
         return (
             <div className="body">

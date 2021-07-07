@@ -4,7 +4,6 @@ import deleteIcon from '../../assets/icons/delete-black-18dp.svg';
 import editIcon from '../../assets/icons/create-black-18dp.svg';
 import { withRouter } from 'react-router-dom';
 import AddressBookService from '../../services/address-book-service';
-import HomePage from '../home-page/home-page';
 
 const AddressBookList = (props) => {
 
